@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "924683716899",
+    "firebase_url": "https://freebix-e3570.firebaseio.com",
+    "project_id": "freebix-e3570",
+    "storage_bucket": "freebix-e3570.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924683716899:android:3b126a3ad99fa2296d6496",
+        "android_client_info": {
+          "package_name": "com.example.freebix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924683716899-fqaubo3o9cnvv8lgjqd9h03g2vgl06d1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAWulstQOqN8vCUkf3lthpg2gG-cfiiL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924683716899-fqaubo3o9cnvv8lgjqd9h03g2vgl06d1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
