@@ -14,7 +14,7 @@ final $user = FutureProvider.autoDispose.family;
 final userPages =
 $user<QuerySnapshot, String>(
       (ref, email) async {
-    final repository = ref.watch(userRepositoryProvider);
+    final repository = ref.read(userRepositoryProvider);
     final user = await repository.getUser(email);
     // Once a page was downloaded, preserve its state to avoid re-downloading it again.
     //ref.maintainState = true;
@@ -99,7 +99,9 @@ class Profile extends ConsumerWidget{
                  color: Colours.navBarText,
                  fontSize: 18,
                  fontWeight: FontWeight.bold)),
-             RaisedButton(onPressed: ()=> verification(context, getRoute(user.stage)),
+             RaisedButton(onPressed: () {
+                verification(context, getRoute(user.stage));
+             },
                child: Text(user.level>0 ? "Continue Verification":"Begin Verification", style: TextStyle(
                    fontWeight: FontWeight.w500, fontSize: 16.0)),
                color: Color.fromRGBO(108, 210, 207, 1.0),
@@ -146,7 +148,7 @@ class Profile extends ConsumerWidget{
           Text(email, style:Style.regText),
         ],crossAxisAlignment: CrossAxisAlignment.start,
       ),
-      const SizedBox(width:20),
+
       ],crossAxisAlignment: CrossAxisAlignment.start,
     ),
     height: 100,
@@ -186,7 +188,7 @@ String getRoute(int val){
 
 
   
- void verification(BuildContext context,String route) async{
+  void verification(BuildContext context,String route) async{
     Navigator.pushNamed(context, route);
  } 
 

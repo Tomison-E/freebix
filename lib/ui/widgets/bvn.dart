@@ -91,8 +91,8 @@ class _BVNFormState extends State<BVNForm> {
           final update = await upgrade();
           update.maybeWhen(
               success: (bool data) =>
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, UIData.homeRoute, ModalRoute.withName('/')),
+                  Navigator.of(context)
+                  .pushNamedAndRemoveUntil(UIData.homeRoute, (Route<dynamic> route) => false),
               orElse: () => showInSnackBar('BVN Verification failed'));
         }
         else {

@@ -62,10 +62,10 @@ class _PassportState extends State<Passport>{
           final update = await upgrade();
           update.maybeWhen(
               success: (bool data) {
-                context.read(userRepositoryProvider).refresh();
-             //   Navigator.pop(context);
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(UIData.homeRoute, (Route<dynamic> route) => false);
+                //context.read(userRepositoryProvider).refresh();
+               Navigator.pop(context, true);
+               // Navigator.of(context)
+               //     .pushNamedAndRemoveUntil(UIData.homeRoute, (Route<dynamic> route) => false);
               },
               orElse: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Upload Successful"))));
         }

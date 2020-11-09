@@ -62,6 +62,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: Controller.Router.generateRoute,
       onUnknownRoute: Controller.Router.unknownRoute,
       initialRoute: UIData.loginRoute,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
