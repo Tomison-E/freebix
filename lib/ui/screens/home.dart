@@ -39,7 +39,7 @@ class _Home extends State<Home>
         ],),
         elevation: 0.0,backgroundColor: Colors.transparent,centerTitle: false,
         actions: [
-          Icon(Icons.settings, color: Colours.navBarText,size: 30),
+          IconButton(icon:Icon(Icons.highlight_off, color: Colours.navBarText,size: 30),onPressed: ()=>Navigator.of(context).pop()),
           const SizedBox(width: 15),
         ],),
       body:  PageView(

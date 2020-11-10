@@ -85,20 +85,22 @@ class _BVNFormState extends State<BVNForm> {
         });
         final test = verify();
         if (test) {
-          Navigator.pop(context);
           _autoValidate = AutovalidateMode.disabled;
           _reset(form);
           final update = await upgrade();
           update.maybeWhen(
-              success: (bool data) =>
-                  Navigator.of(context)
-                  .pushNamedAndRemoveUntil(UIData.homeRoute, (Route<dynamic> route) => false),
+              success: (bool data) {
+                showInSnackBar('BVN Verification Successful');
+                Navigator.pop(context,true);
+              },
               orElse: () => showInSnackBar('BVN Verification failed'));
         }
         else {
-          Navigator.pop(context);
           showInSnackBar('BVN Verification Unsuccessful');
         }
+        setState(() {
+          loading = false;
+        });
       }
     }
     catch(e){

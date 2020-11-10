@@ -7,7 +7,6 @@ import 'package:freebix/utils/uiData.dart';
 import 'package:freebix/utils/validators.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:password/password.dart';
-import 'package:freebix/core/repositories/user.dart' as login;
 
 class Login extends StatelessWidget{
   @override
@@ -18,7 +17,7 @@ class Login extends StatelessWidget{
              padding: EdgeInsets.all(30),
      child:Column(
          children: [
-           const SizedBox(height:100),
+           const SizedBox(height:30),
            Row(children: [
              const SizedBox(width: 10),
              CircleAvatar(child:Icon(Icons.flash_on,color:Colors.white),radius: 20,backgroundColor: Colors.blue),
@@ -78,27 +77,26 @@ class _LoginFormState extends State<LoginForm> {
     return hash;
   }
 
-  Future<void> _handleSubmitted() async {
+  Future<void> handleSubmitted() async {
     final FormState form = _formKey.currentState;
     if (!form.validate()) {
       _autoValidate = AutovalidateMode.always; // Start validating on every change.
       showInSnackBar('Please fix the errors in red before submitting.');
     } else {
-      form.save();
-        _showDialog(context);
-       final test = await context.read(authenticationProvider).signIn(email, hash(password));
+        form.save();
+        Dialog(context);
+       final test = await context.read(authenticationProvider).signIn(email, password);
         test.maybeWhen(
           success: (bool data) async{
             Navigator.pop(context);
             final user = context.read(fireBaseAuthProvider).currentUser;
             if (!user.emailVerified) {
               await user.sendEmailVerification();
-              showInSnackBar("Check email address for veriication link");
-              //Navigator.pushNamed(context, UIData.otpRoute);
+              showInSnackBar("Check email address for verification link");
             }
             else {
               _autoValidate = AutovalidateMode.disabled;
-              _reset(form);
+              reset(form);
               Navigator.pushNamed(context, UIData.homeRoute);};
           },
           error: (String errorMsg) {
@@ -113,11 +111,11 @@ class _LoginFormState extends State<LoginForm> {
       }
   }
 
-  void _reset(FormState form) {
+  void reset(FormState form) {
     form.reset();
   }
 
-  Future<bool> _warnUserAboutInvalidData() async {
+  Future<bool> warnUserAboutInvalidData() async {
     final FormState form = _formKey.currentState;
     if (form == null || !_formWasEdited || form.validate())
       return true;
@@ -152,7 +150,7 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: _formKey,
       autovalidateMode: _autoValidate,
-      onWillPop: _warnUserAboutInvalidData,
+      onWillPop: warnUserAboutInvalidData,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -188,7 +186,7 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(
               height: 50,
               width: double.infinity,
-              child: RaisedButton(onPressed: () => _handleSubmitted(),
+              child: RaisedButton(onPressed: () => handleSubmitted(),
                 child: Text("Sign in", style: TextStyle(
                     fontWeight: FontWeight.w500, fontSize: 16.0)),
                 color: Color.fromRGBO(87, 165, 244, 1.0),
@@ -218,7 +216,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void _showDialog(BuildContext context) {
+  void Dialog(BuildContext context) {
     // flutter defined function
     showDialog(
       context: context,

@@ -31,7 +31,7 @@ class Authentication{
      }
      else{
        print('Failed with error code: ${e.code}');
-       return ApiResult.error(errorMsg: 'Unable to crate user');
+       return ApiResult.error(errorMsg: 'Unable to crate account');
      }
    } catch (e) {
      print('Failed with error code: ${e.code}');

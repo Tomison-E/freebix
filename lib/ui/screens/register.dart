@@ -91,8 +91,8 @@ class _RegisterFormState extends State<RegisterForm> {
       form.save();
         _showDialog(context);
         final names = name.split(" ");
-        final _password = hash(password);
-        final user = Registration(username, firstName: names[0], lastName: names[1] ?? names[0], email: email, password: _password);
+        //final _password = hash(password);
+        final user = Registration(username, firstName: names[0], lastName: names[1] ?? names[0], email: email, password: password);
           final test = await context.read(registrationRepositoryProvider).register(user);
           test.maybeWhen(
             success: (bool data) {

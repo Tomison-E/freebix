@@ -9,7 +9,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:freebix/utils/uiData.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Passport extends StatefulWidget {
@@ -51,6 +50,8 @@ class _PassportState extends State<Passport>{
     });
   }
 
+
+
   void upload() async{
     if(file!= null) {
       bool val;
@@ -58,24 +59,24 @@ class _PassportState extends State<Passport>{
         final value = uploadFile(file);
         val = value!= null ? true: false;
         if(val){
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Upload Successful")));
+          //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Upload Successful : Awaiting Approval")));
           final update = await upgrade();
           update.maybeWhen(
               success: (bool data) {
-                //context.read(userRepositoryProvider).refresh();
-               Navigator.pop(context, true);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Upload Successful")));
+                Navigator.pop(context,true);
                // Navigator.of(context)
-               //     .pushNamedAndRemoveUntil(UIData.homeRoute, (Route<dynamic> route) => false);
+               //     .pushNamed(UIData.homeRoute, (Route<dynamic> route) => false);
               },
-              orElse: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Upload Successful"))));
+              orElse: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Upload UnSuccessful"))));
         }
         else{
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Unable to upload file")));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Unable to upload document")));
         }
       }
       catch(e){
         print(e);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Unable Error")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error Uploading document")));
       }
     }
   }

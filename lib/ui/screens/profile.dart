@@ -14,7 +14,7 @@ final $user = FutureProvider.autoDispose.family;
 final userPages =
 $user<QuerySnapshot, String>(
       (ref, email) async {
-    final repository = ref.read(userRepositoryProvider);
+    final repository = ref.watch(userRepositoryProvider);
     final user = await repository.getUser(email);
     // Once a page was downloaded, preserve its state to avoid re-downloading it again.
     //ref.maintainState = true;
@@ -66,6 +66,11 @@ class Profile extends ConsumerWidget{
             );
         },
         data: (user) {
+          if(user == null){
+            return Center(
+              child: Text('Error Loading Data'),
+            );
+          }
             return Container(
               padding: EdgeInsets.all(30),
               child: SingleChildScrollView(
@@ -101,6 +106,7 @@ class Profile extends ConsumerWidget{
                  fontWeight: FontWeight.bold)),
              RaisedButton(onPressed: () {
                 verification(context, getRoute(user.stage));
+               //reload(context);
              },
                child: Text(user.level>0 ? "Continue Verification":"Begin Verification", style: TextStyle(
                    fontWeight: FontWeight.w500, fontSize: 16.0)),
@@ -189,7 +195,17 @@ String getRoute(int val){
 
   
   void verification(BuildContext context,String route) async{
-    Navigator.pushNamed(context, route);
- } 
+    Navigator.pushNamed(context, route).then((value) {
+      if(value){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: new Text("Awaiting Approval")
+        ));
+      }
+    });
+ }
+
+ void reload(BuildContext context){
+    
+ }
 
 }
