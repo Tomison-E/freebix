@@ -27,8 +27,11 @@ class Validators{
 
   String validateEmail(String value) {
     _formWasEdited = true;
+    final email = value.trim();
     if (value.isEmpty)
       return 'Email is required.';
+    if (email.contains("@") == false || email.contains(".") == false)
+      return 'Email is not valid.';
     return null;
   }
 
